@@ -2,18 +2,26 @@ package jsonX
 
 import "encoding/json"
 
-func MarshalIndentStr(obj interface{}) string {
+func MarshalIndent(obj interface{}) []byte {
 	byteSlice, err := json.MarshalIndent(obj, "", "\t")
 	if err != nil {
 		panic(err)
 	}
-	return string(byteSlice)
+	return byteSlice
 }
 
-func MarshalStr(obj interface{}) string {
+func MarshalIndentStr(obj interface{}) string {
+	return string(MarshalIndent(obj))
+}
+
+func Marshal(obj interface{}) []byte {
 	byteSlice, err := json.Marshal(obj)
 	if err != nil {
 		panic(err)
 	}
-	return string(byteSlice)
+	return byteSlice
+}
+
+func MarshalStr(obj interface{}) string {
+	return string(Marshal(obj))
 }
