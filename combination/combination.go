@@ -1,7 +1,11 @@
 package combination
 
 func GetAllIndexArray(all int, pick int) [][]int {
-	return getAllIndexArray(getAllIndexArrayReq{})
+	return getAllIndexArray(getAllIndexArrayReq{
+		in:   nil,
+		all:  all,
+		pick: pick,
+	})
 }
 
 type getAllIndexArrayReq struct {
