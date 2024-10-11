@@ -1,48 +1,33 @@
 package combination
 
 func GetAllIndexArray(all int, pick int) [][]int {
-	return getAllIndexArray(getAllIndexArrayReq{
-		in:   nil,
-		all:  all,
-		pick: pick,
-	})
+	return getAllIndexArray(all, pick, nil)
 }
 
-type getAllIndexArrayReq struct {
-	in   []int
-	all  int
-	pick int
-}
-
-func getAllIndexArray(req getAllIndexArrayReq) (out [][]int) {
-	nextPick := getAllNextPick(req.all, []int{})
-	if len(nextPick) == req.all-req.pick {
-		return [][]int{req.in}
+func getAllIndexArray(all int, pick int, in []int) (out [][]int) {
+	nextPick := getAllNextPick(all, pick, in)
+	if len(nextPick) == all-pick {
+		return [][]int{in}
 	}
 	for _, item := range nextPick {
-		out = append(out,
-			getAllIndexArray(getAllIndexArrayReq{
-				in:   append(append([]int{}, req.in...), item),
-				all:  req.all,
-				pick: req.pick,
-			})...)
+		out = append(out, getAllIndexArray(all, pick, append(append([]int{}, in...), item))...)
 	}
 	return
 }
 
-func getAllNextPick(all int, in []int) (out []int) {
+func getAllNextPick(all int, pick int, in []int) (out []int) {
 	if len(in) == 0 {
-		for i := 1; i <= all; i++ {
-			out = append(out, i)
+		for item := 1; item <= all; item++ {
+			out = append(out, item)
 		}
 		return
 	}
-	if len(in) == all {
+	if len(in) == all-pick {
 		return
 	}
 	have := map[int]struct{}{}
-	for i := 0; i < len(in); i++ {
-		have[in[i]] = struct{}{}
+	for index := 0; index < len(in); index++ {
+		have[in[index]] = struct{}{}
 	}
 	for item := 1; item <= all; item++ {
 		_, ok := have[item]
