@@ -17,7 +17,7 @@ func getAllIndexArray(all int, pick int, in []int) (out [][]int) {
 
 func getAllNextPick(all int, pick int, in []int) (out []int) {
 	if len(in) == 0 {
-		for item := 1; item <= all; item++ {
+		for item := 0; item < all; item++ {
 			out = append(out, item)
 		}
 		return
@@ -29,7 +29,7 @@ func getAllNextPick(all int, pick int, in []int) (out []int) {
 	for index := 0; index < len(in); index++ {
 		have[in[index]] = struct{}{}
 	}
-	for item := 1; item <= all; item++ {
+	for item := 0; item < all; item++ {
 		_, ok := have[item]
 		if ok {
 			continue
